@@ -188,7 +188,7 @@ provider "aws" {
 }
 
 module "cloudfront" {
-  source      = "app.terraform.io/bigfantech/cloudfront-cdn/aws"
+  source      = "bigfantech-cloud/cloudfront-cdn/aws"
   version     = "1.0.0"
 
   project_name  = "abc"
