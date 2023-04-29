@@ -52,7 +52,7 @@ variable "origin_ssl_protocols" {
 variable "origin_shield_region" {
   description = <<-EOF
   The AWS Region for Origin Shield. To specify a region, use the region code, not the region name.
-  Ex: US East (Ohio) region as us-east-2.
+  example: US East (Ohio) region as us-east-2.
   CloudFront Origin Shield adds an additional layer in the CloudFront caching infrastructure that helps to minimize origin’s load,
   improve its availability, and reduce its operating costs.
   EOF
@@ -61,7 +61,7 @@ variable "origin_shield_region" {
 }
 
 variable "default_root_object" {
-  description = "The object that you want CloudFront to return (ex: index.html) when an end user requests the root URL. Default = null"
+  description = "The object that you want CloudFront to return (example: index.html) when an end user requests the root URL. Default = null"
   type        = string
   default     = null
 }
@@ -167,15 +167,15 @@ variable "default_cache_response_headers_policy_id" {
 variable "ordered_cache_behavior" {
   description = "List of map for Ordered Cache Behavior configuration"
   type = list(object({
-    path_pattern                = string
-    compress                    = bool
-    allowed_methods             = list(string)
-    cached_methods              = list(string)
-    viewer_protocol_policy      = string
-    cache_policy_id             = string
-    origin_request_policy_id    = string
-    response_headers_policy_id  = string
-    target_origin_id            = string
+    path_pattern               = string
+    compress                   = bool
+    allowed_methods            = list(string)
+    cached_methods             = list(string)
+    viewer_protocol_policy     = string
+    cache_policy_id            = string
+    origin_request_policy_id   = string
+    response_headers_policy_id = string
+    target_origin_id           = string
   }))
 
   default = []
@@ -186,7 +186,7 @@ variable "ordered_cache_behavior" {
 #----
 
 variable "geo_restriction_type" {
-  description = "Restriction methods. Ex: none, whitelist, or blacklist. Default = none"
+  description = "Restriction methods. example: none, whitelist, or blacklist. Default = none"
   type        = string
   default     = "none"
 }

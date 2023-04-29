@@ -7,7 +7,7 @@ Create CloudFront CDN. And create Route53 record for each Alternate Domains prov
 #### REQUIRED:
 
 ```
-project_name               (ex: project name)
+project_name               (example: project name)
 
 origin_domain_name:
   The DNS domain name of either the Custom Origin, or S3 bucket.
@@ -17,7 +17,7 @@ origin_domain_name:
 ### OPTIONAL
 
 ```
-environment                (ex: dev/prod)
+environment                (example: dev/prod)
 
 enable_distribution:
   Whether the distribution is enabled to accept end user requests for content. Default = true.
@@ -51,12 +51,12 @@ origin_ssl_protocols:
 
 origin_shield_region:
   The AWS Region for Origin Shield. To specify a region, use the region code, not the region name.
-  Ex: US East (Ohio) region as us-east-2.
+  example: US East (Ohio) region as us-east-2.
   CloudFront Origin Shield adds an additional layer in the CloudFront caching infrastructure that helps to minimize origin’s load,
   improve its availability, and reduce its operating costs.
 
 default_root_object:
-  The object that you want CloudFront to return (ex: index.html) when an end user requests the root URL.
+  The object that you want CloudFront to return (example: index.html) when an end user requests the root URL.
   Default = null.
 
 s3_origin_access_identity:
@@ -138,7 +138,7 @@ ordered_cache_behavior:
 #----
 
 geo_restriction_type:
-  Restriction methods. Ex: none, whitelist, or blacklist. Default = none.
+  Restriction methods. example: none, whitelist, or blacklist. Default = none.
 
 geo_restriction_locations:
     List of location to apply Geo Restriction.
