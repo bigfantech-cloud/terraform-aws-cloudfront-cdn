@@ -79,103 +79,64 @@ variable "ipv6_enabled" {
 }
 
 variable "custom_error_response" {
-  description = "List of map with Custom Error Response configurations. Default = []"
+  description = "List of map with Custom Error Response configurations `error_code`, `error_caching_min_ttl` (optional), `response_code` (optional), `response_page_path`(optional). Default = []"
   type = list(object({
-    error_caching_min_ttl = string
     error_code            = string
-    response_code         = string
-    response_page_path    = string
+    error_caching_min_ttl = optional(string)
+    response_code         = optional(string)
+    response_page_path    = optional(string)
   }))
 
   default = []
 }
 
-#----------
-# DEFAULT CACHE BEHAVIOUR
-#----------
+variable "default_cache_behavior" {
+  description = <<-EOT
+    Map of default cache configs
+    ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
+  EOT
+  type = object({
+    allowed_methods             = optional(list(string))
+    cached_methods              = optional(list(string))
+    target_origin_id            = optional(string)
+    viewer_protocol_policy      = optional(string)
+    cache_policy_id             = optional(string)
+    compress                    = optional(bool)
+    default_ttl                 = optional(number)
+    field_level_encryption_id   = optional(string)
+    min_ttl                     = optional(number)
+    max_ttl                     = optional(number)
+    origin_request_policy_id    = optional(string)
+    realtime_log_config_arn     = optional(string)
+    response_headers_policy_id  = optional(string)
+    smooth_streaming            = optional(bool)
+    trusted_key_groups          = optional(list(string))
+    trusted_signers             = optional(list(string))
+  })
 
-variable "default_cache_compress" {
-  description = "Whether CloudFront to automatically compress content for web requests. Default = ture"
-  type        = bool
-  default     = true
+  default = {}
 }
-
-variable "default_cache_allowed_method" {
-  description = <<-EOF
-    List of HTTP methods CloudFront processes and forwards to the Origin.
-    Default = ["GET", "HEAD"]
-    EOF
-  type        = list(string)
-  default     = ["GET", "HEAD"]
-}
-
-variable "default_cached_methods" {
-  description = <<-EOF
-    Controls whether CloudFront caches the response to requests using the specified HTTP methods.
-    Default = ["GET", "HEAD"]
-    EOF
-
-  type    = list(string)
-  default = ["GET", "HEAD"]
-}
-
-variable "default_cache_viewer_protocol_policy" {
-  description = <<-EOF
-    Protocol that users can use to access the files in the origin. 
-    One of allow-all, https-only, or redirect-to-https.
-    Default = "redirect-to-https"
-    EOF
-
-  type    = string
-  default = "redirect-to-https"
-}
-
-variable "default_cache_policy_id" {
-  description = <<-EOF
-    Cache Policy that is attached to the cache behavior. Cache Policy can be created with resource 'aws_cloudfront_cache_policy'.
-    Default = CachingDisabled
-    EOF
-
-  type    = string
-  default = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
-}
-
-variable "default_cache_origin_request_policy_id" {
-  description = <<-EOF
-    Origin Request Policy that is attached to the behavior. Origin Request Policy can be created with resource 'aws_cloudfront_origin_request_policy'.
-    Default = null
-    EOF
-
-  type    = string
-  default = null
-}
-
-variable "default_cache_response_headers_policy_id" {
-  description = <<-EOF
-    Response Header Policy that is attached to the behavior. Response Header Policy can be created with resource 'aws_cloudfront_response_headers_policy'.
-    Default = null
-    EOF
-
-  type    = string
-  default = null
-}
-
-#----------
-# ORDERED CACHE BEHAVIOUR
-#----------
 
 variable "ordered_cache_behavior" {
   description = "List of map for Ordered Cache Behavior configuration"
   type = list(object({
-    path_pattern               = string
-    compress                   = bool
-    allowed_methods            = list(string)
-    cached_methods             = list(string)
-    viewer_protocol_policy     = string
-    cache_policy_id            = string
-    origin_request_policy_id   = string
-    response_headers_policy_id = string
-    target_origin_id           = string
+    path_pattern                = string
+    allowed_methods             = list(string)
+    cached_methods              = list(string)
+    viewer_protocol_policy      = string
+    target_origin_id            = string
+    cache_policy_id             = optional(string)
+    compress                    = optional(bool)
+    default_ttl                 = optional(number)
+    field_level_encryption_id   = optional(string)
+    min_ttl                     = optional(number)
+    max_ttl                     = optional(number)
+    origin_request_policy_id    = optional(string)
+    realtime_log_config_arn     = optional(string)
+    response_headers_policy_id  = optional(string)
+    smooth_streaming            = optional(bool)
+    trusted_key_groups          = optional(list(string))
+    trusted_signers             = optional(list(string))
   }))
 
   default = []
@@ -228,8 +189,8 @@ variable "ssl_support_method" {
 # LOG
 #----
 
-variable "log_bucket" {
-  description = "Name of the S3 bucket to save logs. Passing bucket name will enable logging."
+variable "log_bucket_domain_name" {
+  description = "Domain name of the S3 bucket to save logs. Specifying this value will enable logging."
   type        = string
   default     = null
 }
