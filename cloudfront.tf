@@ -58,22 +58,22 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   default_cache_behavior {
-    allowed_methods            = lookup(var.default_cache_behavior, "allowed_methods", ["GET", "HEAD"])
-    cached_methods             = lookup(var.default_cache_behavior, "cached_methods", ["GET", "HEAD"])
-    target_origin_id           = lookup(var.default_cache_behavior, "target_origin_id", module.this.id)
-    viewer_protocol_policy     = lookup(var.default_cache_behavior, "viewer_protocol_policy", "redirect-to-https")
-    cache_policy_id            = lookup(var.default_cache_behavior, "cache_policy_id", "4135ea2d-6df8-44a3-9df3-4b5a84be39ad")
-    compress                   = lookup(var.default_cache_behavior, "compress", false)
-    default_ttl                = lookup(var.default_cache_behavior, "default_ttl", null)
-    field_level_encryption_id  = lookup(var.default_cache_behavior, "field_level_encryption_id", null)
-    min_ttl                    = lookup(var.default_cache_behavior, "min_ttl", null)
-    max_ttl                    = lookup(var.default_cache_behavior, "max_ttl", null)
-    origin_request_policy_id   = lookup(var.default_cache_behavior, "origin_request_policy_id", null)
-    realtime_log_config_arn    = lookup(var.default_cache_behavior, "realtime_log_config_arn", null)
-    response_headers_policy_id = lookup(var.default_cache_behavior, "response_headers_policy_id", null)
-    smooth_streaming           = lookup(var.default_cache_behavior, "smooth_streaming", null)
-    trusted_key_groups         = lookup(var.default_cache_behavior, "trusted_key_groups", null)
-    trusted_signers            = lookup(var.default_cache_behavior, "trusted_signers", null)
+    allowed_methods            = var.default_cache_behavior["allowed_methods"] != null ? var.default_cache_behavior["allowed_methods"] : ["GET", "HEAD"]
+    cached_methods             = var.default_cache_behavior["cached_methods"] != null ? var.default_cache_behavior["cached_methods"] : ["GET", "HEAD"]
+    target_origin_id           = var.default_cache_behavior["target_origin_id"] != null ? var.default_cache_behavior["target_origin_id"] : module.this.id
+    viewer_protocol_policy     = var.default_cache_behavior["viewer_protocol_policy"] != null ? var.default_cache_behavior["viewer_protocol_policy"] : "redirect-to-https"
+    cache_policy_id            = var.default_cache_behavior["cache_policy_id"] != null ? var.default_cache_behavior["cache_policy_id"] : "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    compress                   = var.default_cache_behavior["compress"] != null ? var.default_cache_behavior["compress"] : false
+    default_ttl                = var.default_cache_behavior["default_ttl"] != null ? var.default_cache_behavior["default_ttl"] : null
+    field_level_encryption_id  = var.default_cache_behavior["field_level_encryption_id"] != null ? var.default_cache_behavior["field_level_encryption_id"] : null
+    min_ttl                    = var.default_cache_behavior["min_ttl"] != null ? var.default_cache_behavior["min_ttl"] : null
+    max_ttl                    = var.default_cache_behavior["max_ttl"] != null ? var.default_cache_behavior["max_ttl"] : null
+    origin_request_policy_id   = var.default_cache_behavior["origin_request_policy_id"] != null ? var.default_cache_behavior["origin_request_policy_id"] : null
+    realtime_log_config_arn    = var.default_cache_behavior["realtime_log_config_arn"] != null ? var.default_cache_behavior["realtime_log_config_arn"] : null
+    response_headers_policy_id = var.default_cache_behavior["response_headers_policy_id"] != null ? var.default_cache_behavior["response_headers_policy_id"] : null
+    smooth_streaming           = var.default_cache_behavior["smooth_streaming"] != null ? var.default_cache_behavior["smooth_streaming"] : null
+    trusted_key_groups         = var.default_cache_behavior["trusted_key_groups"] != null ? var.default_cache_behavior["trusted_key_groups"] : null
+    trusted_signers            = var.default_cache_behavior["trusted_signers"] != null ? var.default_cache_behavior["trusted_signers"] : null
   }
 
   dynamic "ordered_cache_behavior" {
@@ -81,22 +81,22 @@ resource "aws_cloudfront_distribution" "default" {
 
     content {
       path_pattern               = ordered_cache_behavior.value.path_pattern
-      allowed_methods            = ordered_cache_behavior.value.allowed_methods
-      cached_methods             = ordered_cache_behavior.value.cached_methods
-      viewer_protocol_policy     = ordered_cache_behavior.value.viewer_protocol_policy
-      target_origin_id           = ordered_cache_behavior.value.target_origin_id
-      cache_policy_id            = lookup(ordered_cache_behavior.value, "cache_policy_id", null)
-      compress                   = lookup(ordered_cache_behavior.value, "compress", false)
-      default_ttl                = lookup(ordered_cache_behavior.value, "default_ttl", null)
-      field_level_encryption_id  = lookup(ordered_cache_behavior.value, "field_level_encryption_id", null)
-      min_ttl                    = lookup(ordered_cache_behavior.value, "min_ttl", null)
-      max_ttl                    = lookup(ordered_cache_behavior.value, "max_ttl", null)
-      origin_request_policy_id   = lookup(ordered_cache_behavior.value, "origin_request_policy_id", null)
-      realtime_log_config_arn    = lookup(ordered_cache_behavior.value, "realtime_log_config_arn", null)
-      response_headers_policy_id = lookup(ordered_cache_behavior.value, "response_headers_policy_id", null)
-      smooth_streaming           = lookup(ordered_cache_behavior.value, "smooth_streaming", null)
-      trusted_key_groups         = lookup(ordered_cache_behavior.value, "trusted_key_groups", null)
-      trusted_signers            = lookup(ordered_cache_behavior.value, "trusted_signers", null)
+      allowed_methods            = ordered_cache_behavior.value["allowed_methods"] ? ordered_cache_behavior.value["allowed_methods"] : ["GET", "HEAD"]
+      cached_methods             = ordered_cache_behavior.value["cached_methods"] ? ordered_cache_behavior.value["cached_methods"] : ["GET", "HEAD"]
+      viewer_protocol_policy     = ordered_cache_behavior.value["viewer_protocol_policy"] ? ordered_cache_behavior.value["viewer_protocol_policy"] : "redirect-to-https"
+      target_origin_id           = ordered_cache_behavior.value["target_origin_id"] ? ordered_cache_behavior.value["target_origin_id"] : module.this.id
+      cache_policy_id            = ordered_cache_behavior.value["cache_policy_id"] ? ordered_cache_behavior.value["cache_policy_id"] : null
+      compress                   = ordered_cache_behavior.value["compress"] ? ordered_cache_behavior.value["compress"] : false
+      default_ttl                = ordered_cache_behavior.value["default_ttl"] ? ordered_cache_behavior.value["default_ttl"] : null
+      field_level_encryption_id  = ordered_cache_behavior.value["field_level_encryption_id"] ? ordered_cache_behavior.value["field_level_encryption_id"] : null
+      min_ttl                    = ordered_cache_behavior.value["min_ttl"] ? ordered_cache_behavior.value["min_ttl"] : null
+      max_ttl                    = ordered_cache_behavior.value["max_ttl"] ? ordered_cache_behavior.value["max_ttl"] : null
+      origin_request_policy_id   = ordered_cache_behavior.value["origin_request_policy_id"] ? ordered_cache_behavior.value["origin_request_policy_id"] : null
+      realtime_log_config_arn    = ordered_cache_behavior.value["realtime_log_config_arn"] ? ordered_cache_behavior.value["realtime_log_config_arn"] : null
+      response_headers_policy_id = ordered_cache_behavior.value["response_headers_policy_id"] ? ordered_cache_behavior.value["response_headers_policy_id"] : null
+      smooth_streaming           = ordered_cache_behavior.value["smooth_streaming"] ? ordered_cache_behavior.value["smooth_streaming"] : null
+      trusted_key_groups         = ordered_cache_behavior.value["trusted_key_groups"] ? ordered_cache_behavior.value["trusted_key_groups"] : null
+      trusted_signers            = ordered_cache_behavior.value["trusted_signers"] ? ordered_cache_behavior.value["trusted_signers"] : null
     }
   }
 
