@@ -211,9 +211,9 @@ variable "custom_cloudfront_log_bucket_domain_name" {
 }
 
 variable "cloudfront_log_prefix" {
-  description = "CloudFront log prefix. Default = / "
+  description = "CloudFront log prefix. Default = null "
   type        = string
-  default     = "/"
+  default     = null
 }
 
 variable "create_cloudfront_log_lifecycle" {
