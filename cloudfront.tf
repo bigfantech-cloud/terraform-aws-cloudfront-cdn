@@ -37,12 +37,12 @@ resource "aws_cloudfront_distribution" "default" {
   aliases             = var.alternate_domain_names
 
   dynamic "logging_config" {
-    for_each = var.log_bucket != null ? ["true"] : []
+    for_each = var.log_bucket_domain_name != null ? ["true"] : []
 
     content {
       include_cookies = false
-      bucket          = var.log_bucket
-      prefix          = var.log_prefix
+      bucket          = var.log_bucket_domain_name
+      prefix          = try(var.log_prefix, "/")
     }
   }
 
@@ -58,14 +58,22 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   default_cache_behavior {
-    compress                    = var.default_cache_compress
-    allowed_methods             = var.default_cache_allowed_method
-    cached_methods              = var.default_cached_methods
-    viewer_protocol_policy      = var.default_cache_viewer_protocol_policy
-    cache_policy_id             = var.default_cache_policy_id
-    origin_request_policy_id    = var.default_cache_origin_request_policy_id
-    response_headers_policy_id  = var.default_cache_response_headers_policy_id
-    target_origin_id            = module.this.id
+    allowed_methods             = lookup(var.default_cache_behavior, allowed_methods, ["GET", "HEAD"])
+    cached_methods              = lookup(var.default_cache_behavior, cached_methods, ["GET", "HEAD"])
+    target_origin_id            = lookup(var.default_cache_behavior, target_origin_id, module.this.id)
+    viewer_protocol_policy      = lookup(var.default_cache_behavior, viewer_protocol_policy, "redirect-to-https")
+    cache_policy_id             = lookup(var.default_cache_behavior, cache_policy_id, "4135ea2d-6df8-44a3-9df3-4b5a84be39ad")
+    compress                    = lookup(var.default_cache_behavior, compress, false)
+    default_ttl                 = lookup(var.default_cache_behavior, default_ttl, null)
+    field_level_encryption_id   = lookup(var.default_cache_behavior, field_level_encryption_id, null)
+    min_ttl                     = lookup(var.default_cache_behavior, min_ttl, null)
+    max_ttl                     = lookup(var.default_cache_behavior, max_ttl, null)
+    origin_request_policy_id    = lookup(var.default_cache_behavior, origin_request_policy_id, null)
+    realtime_log_config_arn     = lookup(var.default_cache_behavior, realtime_log_config_arn, null)
+    response_headers_policy_id  = lookup(var.default_cache_behavior, response_headers_policy_id, null)
+    smooth_streaming            = lookup(var.default_cache_behavior, smooth_streaming, null)
+    trusted_key_groups          = lookup(var.default_cache_behavior, trusted_key_groups, null)
+    trusted_signers             = lookup(var.default_cache_behavior, trusted_signers, null)
   }
 
   dynamic "ordered_cache_behavior" {
