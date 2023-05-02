@@ -118,7 +118,10 @@ variable "default_cache_behavior" {
 }
 
 variable "ordered_cache_behavior" {
-  description = "List of map for Ordered Cache Behavior configuration"
+  description = <<-EOT
+    List of map of Ordered Cache Behavior configuration"
+    ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
+  EOT
   type = list(object({
     path_pattern                = string
     allowed_methods             = list(string)
