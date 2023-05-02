@@ -93,18 +93,55 @@ variable "custom_error_response" {
 variable "default_cache_behavior" {
   description = <<-EOT
     Map of default cache configs
-    For config keys ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
+    ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
   EOT
-  type    = map(any)
+  type = object({
+    allowed_methods            = optional(list(string))
+    cached_methods             = optional(list(string))
+    target_origin_id           = optional(string)
+    viewer_protocol_policy     = optional(string)
+    cache_policy_id            = optional(string)
+    compress                   = optional(bool)
+    default_ttl                = optional(number)
+    field_level_encryption_id  = optional(string)
+    min_ttl                    = optional(number)
+    max_ttl                    = optional(number)
+    origin_request_policy_id   = optional(string)
+    realtime_log_config_arn    = optional(string)
+    response_headers_policy_id = optional(string)
+    smooth_streaming           = optional(bool)
+    trusted_key_groups         = optional(list(string))
+    trusted_signers            = optional(list(string))
+  })
+
   default = {}
 }
 
 variable "ordered_cache_behavior" {
   description = <<-EOT
-    List of map of Ordered Cache Behavior configuration"
-    For config keys ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
+    List of map of Ordered Cache Behavior configuration
+    ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#default-cache-behavior-arguments
   EOT
-  type    = list(any)
+  type = list(object({
+    path_pattern               = string
+    allowed_methods            = optional(list(string))
+    cached_methods             = optional(list(string))
+    viewer_protocol_policy     = optional(string)
+    target_origin_id           = optional(string)
+    cache_policy_id            = optional(string)
+    compress                   = optional(bool)
+    default_ttl                = optional(number)
+    field_level_encryption_id  = optional(string)
+    min_ttl                    = optional(number)
+    max_ttl                    = optional(number)
+    origin_request_policy_id   = optional(string)
+    realtime_log_config_arn    = optional(string)
+    response_headers_policy_id = optional(string)
+    smooth_streaming           = optional(bool)
+    trusted_key_groups         = optional(list(string))
+    trusted_signers            = optional(list(string))
+  }))
+
   default = []
 }
 
