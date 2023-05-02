@@ -37,12 +37,12 @@ resource "aws_cloudfront_distribution" "default" {
   aliases             = var.alternate_domain_names
 
   dynamic "logging_config" {
-    for_each = var.log_bucket_domain_name != null ? ["true"] : []
+    for_each = var.enable_cloudfront_logging ? ["true"] : []
 
     content {
       include_cookies = false
-      bucket          = var.log_bucket_domain_name
-      prefix          = try(var.log_prefix, "/")
+      bucket          = local.cloudfront_log_bucket_domain_name
+      prefix          = var.cloudfront_log_prefix
     }
   }
 
