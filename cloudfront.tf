@@ -81,14 +81,22 @@ resource "aws_cloudfront_distribution" "default" {
 
     content {
       path_pattern                = ordered_cache_behavior.value.path_pattern
-      compress                    = ordered_cache_behavior.value.compress
       allowed_methods             = ordered_cache_behavior.value.allowed_methods
       cached_methods              = ordered_cache_behavior.value.cached_methods
       viewer_protocol_policy      = ordered_cache_behavior.value.viewer_protocol_policy
-      cache_policy_id             = ordered_cache_behavior.value.cache_policy_id
-      origin_request_policy_id    = ordered_cache_behavior.value.origin_request_policy_id
-      response_headers_policy_id  = ordered_cache_behavior.response_headers_policy_id
       target_origin_id            = ordered_cache_behavior.value.target_origin_id
+      cache_policy_id             = lookup(var.default_cache_behavior, cache_policy_id, null)
+      compress                    = lookup(var.default_cache_behavior, compress, false)
+      default_ttl                 = lookup(var.default_cache_behavior, default_ttl, null)
+      field_level_encryption_id   = lookup(var.default_cache_behavior, field_level_encryption_id, null)
+      min_ttl                     = lookup(var.default_cache_behavior, min_ttl, null)
+      max_ttl                     = lookup(var.default_cache_behavior, max_ttl, null)
+      origin_request_policy_id    = lookup(var.default_cache_behavior, origin_request_policy_id, null)
+      realtime_log_config_arn     = lookup(var.default_cache_behavior, realtime_log_config_arn, null)
+      response_headers_policy_id  = lookup(var.default_cache_behavior, response_headers_policy_id, null)
+      smooth_streaming            = lookup(var.default_cache_behavior, smooth_streaming, null)
+      trusted_key_groups          = lookup(var.default_cache_behavior, trusted_key_groups, null)
+      trusted_signers             = lookup(var.default_cache_behavior, trusted_signers, null)
     }
   }
 
