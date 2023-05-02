@@ -192,16 +192,46 @@ variable "ssl_support_method" {
 # LOG
 #----
 
-variable "log_bucket_domain_name" {
-  description = "Domain name of the S3 bucket to save logs. Specifying this value will enable logging."
+variable "enable_cloudfront_logging" {
+  description = "Whether to enable CloudFront logging. Default = false"
+  type        = bool
+  default     = false
+}
+
+variable "cloudfront_log_versioning_enabled" {
+  description = "Whether to enable CloudFront log bucket versioning. Default = false"
+  type        = bool
+  default     = false
+}
+
+variable "custom_cloudfront_log_bucket_domain_name" {
+  description = "Custom created S3 bucket domain name. A bucket will be created if `enable_cloudfront_logging` is true, and `custom_cloudfront_log_bucket_domain_name` not set"
   type        = string
   default     = null
 }
 
-variable "log_prefix" {
-  description = "Log Prefix"
+variable "cloudfront_log_prefix" {
+  description = "CloudFront log prefix. Default = / "
   type        = string
-  default     = null
+  default     = "/"
+}
+
+variable "create_cloudfront_log_lifecycle" {
+  description = "Whether to create CloudFront log bucket lifecycle. Default = true"
+  type        = bool
+  default     = true
+}
+
+variable "cloudfront_log_glacier_transition_days" {
+  description = "Number in days after which objects are transistioned to Glacier. Default = 90"
+  type        = number
+  default     = 90
+}
+
+variable "cloudfront_log_expiration_days" {
+  description = "Number in days after which objects are deleted. Default = 180"
+  type        = number
+  default     = 180
 }
 
 #----
