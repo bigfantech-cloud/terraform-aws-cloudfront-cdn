@@ -85,18 +85,18 @@ resource "aws_cloudfront_distribution" "default" {
       cached_methods              = ordered_cache_behavior.value.cached_methods
       viewer_protocol_policy      = ordered_cache_behavior.value.viewer_protocol_policy
       target_origin_id            = ordered_cache_behavior.value.target_origin_id
-      cache_policy_id             = lookup(var.default_cache_behavior, cache_policy_id, null)
-      compress                    = lookup(var.default_cache_behavior, compress, false)
-      default_ttl                 = lookup(var.default_cache_behavior, default_ttl, null)
-      field_level_encryption_id   = lookup(var.default_cache_behavior, field_level_encryption_id, null)
-      min_ttl                     = lookup(var.default_cache_behavior, min_ttl, null)
-      max_ttl                     = lookup(var.default_cache_behavior, max_ttl, null)
-      origin_request_policy_id    = lookup(var.default_cache_behavior, origin_request_policy_id, null)
-      realtime_log_config_arn     = lookup(var.default_cache_behavior, realtime_log_config_arn, null)
-      response_headers_policy_id  = lookup(var.default_cache_behavior, response_headers_policy_id, null)
-      smooth_streaming            = lookup(var.default_cache_behavior, smooth_streaming, null)
-      trusted_key_groups          = lookup(var.default_cache_behavior, trusted_key_groups, null)
-      trusted_signers             = lookup(var.default_cache_behavior, trusted_signers, null)
+      cache_policy_id             = lookup(ordered_cache_behavior.value, cache_policy_id, null)
+      compress                    = lookup(ordered_cache_behavior.value, compress, false)
+      default_ttl                 = lookup(ordered_cache_behavior.value, default_ttl, null)
+      field_level_encryption_id   = lookup(ordered_cache_behavior.value, field_level_encryption_id, null)
+      min_ttl                     = lookup(ordered_cache_behavior.value, min_ttl, null)
+      max_ttl                     = lookup(ordered_cache_behavior.value, max_ttl, null)
+      origin_request_policy_id    = lookup(ordered_cache_behavior.value, origin_request_policy_id, null)
+      realtime_log_config_arn     = lookup(ordered_cache_behavior.valuer, realtime_log_config_arn, null)
+      response_headers_policy_id  = lookup(ordered_cache_behavior.value, response_headers_policy_id, null)
+      smooth_streaming            = lookup(ordered_cache_behavior.value, smooth_streaming, null)
+      trusted_key_groups          = lookup(ordered_cache_behavior.value, trusted_key_groups, null)
+      trusted_signers             = lookup(ordered_cache_behavior.value, trusted_signers, null)
     }
   }
 
