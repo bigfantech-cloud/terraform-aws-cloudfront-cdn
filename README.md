@@ -65,3 +65,4 @@ Create CloudFront CDN. And create Route53 record for each Alternate Domains prov
 | `cloudfront_distribution_arn`            | CloudFront distribution ARN            |
 | `cloudfront_distribution_domain_name`    | CloudFront distribution domain name    |
 | `cloudfront_distribution_hosted_zone_id` | CloudFront distribution hosted zone ID |
+| `cloudfront_log_bucket_name`             | CloudFront log bucket name             |
