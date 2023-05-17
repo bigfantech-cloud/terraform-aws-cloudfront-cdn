@@ -145,6 +145,12 @@ variable "ordered_cache_behavior" {
   default = []
 }
 
+variable "web_acl_id" {
+  description = "AWS WAF ARN to associate with CloudFront"
+  type        = string
+  default     = null
+}
+
 #----
 # GEO RESTRICTION
 #----
@@ -198,7 +204,7 @@ variable "enable_cloudfront_logging" {
   default     = false
 }
 
-variable "cloudfront_log_versioning_enabled" {
+variable "cloudfront_log_bucket_versioning_enabled" {
   description = "Whether to enable CloudFront log bucket versioning. Default = false"
   type        = bool
   default     = false
@@ -216,7 +222,7 @@ variable "cloudfront_log_prefix" {
   default     = ""
 }
 
-variable "create_cloudfront_log_lifecycle" {
+variable "create_cloudfront_log_bucket_lifecycle" {
   description = "Whether to create CloudFront log bucket lifecycle. Default = true"
   type        = bool
   default     = true
