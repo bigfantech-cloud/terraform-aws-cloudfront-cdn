@@ -34,8 +34,6 @@ module "this" {
   label_value_case    = var.label_value_case
   descriptor_formats  = var.descriptor_formats
   labels_as_tags      = var.labels_as_tags
-  name                = var.name
-  namespace           = var.namespace
 
   context = var.context
 }
@@ -66,8 +64,6 @@ variable "context" {
     # by setting `labels_as_tags` to `[]`, so we need
     # a different sentinel to indicate "default"
     labels_as_tags = ["unset"]
-    name           = null
-    namespace      = null
   }
   description = <<-EOT
     Single object for setting entire context at once.
@@ -257,20 +253,4 @@ variable "descriptor_formats" {
     identical to how they appear in `id`.
     Default is `{}` (`descriptors` output will be empty).
     EOT
-}
-
-variable "name" {
-  type        = string
-  default     = null
-  description = <<-EOT
-    ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.
-    This is the only ID element not also included as a `tag`.
-    The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input.
-    EOT
-}
-
-variable "namespace" {
-  type        = string
-  default     = null
-  description = "ID element. Usually an abbreviation of your organization name, to help ensure generated IDs are globally unique"
 }
