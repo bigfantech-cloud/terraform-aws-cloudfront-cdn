@@ -21,7 +21,7 @@ resource "aws_s3_bucket_versioning" "cloudfront_log" {
 
   bucket = aws_s3_bucket.cloudfront_log[0].id
   versioning_configuration {
-    status = var.cloudfront_log_versioning_enabled ? "Enabled" : "Disabled"
+    status = var.cloudfront_log_bucket_versioning_enabled ? "Enabled" : "Disabled"
   }
 }
 
@@ -67,7 +67,7 @@ resource "aws_s3_bucket_acl" "cloudfront_log" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "cloudfront_log" {
-  count      = local.create_cloudfront_log_bucket && var.create_cloudfront_log_lifecycle ? 1 : 0
+  count      = local.create_cloudfront_log_bucket && var.create_cloudfront_log_bucket_lifecycle ? 1 : 0
   depends_on = [aws_s3_bucket_versioning.cloudfront_log]
 
   bucket = aws_s3_bucket.cloudfront_log[0].id
@@ -90,7 +90,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudfront_log" {
     }
 
     dynamic "noncurrent_version_transition" {
-      for_each = var.cloudfront_log_versioning_enabled ? ["true"] : []
+      for_each = var.cloudfront_log_bucket_versioning_enabled ? ["true"] : []
 
       content {
         noncurrent_days = var.cloudfront_log_glacier_transition_days
@@ -98,7 +98,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudfront_log" {
       }
     }
     dynamic "noncurrent_version_expiration" {
-      for_each = var.cloudfront_log_versioning_enabled ? ["true"] : []
+      for_each = var.cloudfront_log_bucket_versioning_enabled ? ["true"] : []
 
       content {
         noncurrent_days = var.cloudfront_log_expiration_days
