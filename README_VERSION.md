@@ -4,7 +4,7 @@
 
 #### what changed:
 
-`web_acl_id` input addec
+`web_acl_id` input added
 
 #### reason for change:
 
