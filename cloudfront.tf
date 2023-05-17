@@ -35,6 +35,14 @@ resource "aws_cloudfront_distribution" "default" {
   comment             = var.description
   default_root_object = var.default_root_object
   aliases             = var.alternate_domain_names
+  web_acl_id          = var.web_acl_id
+  
+  viewer_certificate {
+    acm_certificate_arn            = var.acm_certificate_arn
+    cloudfront_default_certificate = var.acm_certificate_arn != null ? false : true
+    minimum_protocol_version       = var.certificate_minimum_protocol_version
+    ssl_support_method             = var.acm_certificate_arn != null ? var.ssl_support_method : null
+  }
 
   dynamic "logging_config" {
     for_each = var.enable_cloudfront_logging ? ["true"] : []
@@ -107,17 +115,5 @@ resource "aws_cloudfront_distribution" "default" {
     }
   }
 
-  tags = merge(
-    module.this.tags,
-    {
-      Name = "${module.this.id}"
-    }
-  )
-
-  viewer_certificate {
-    acm_certificate_arn            = var.acm_certificate_arn
-    cloudfront_default_certificate = var.acm_certificate_arn != null ? false : true
-    minimum_protocol_version       = var.certificate_minimum_protocol_version
-    ssl_support_method             = var.acm_certificate_arn != null ? var.ssl_support_method : null
-  }
+  tags = module.this.tags
 }
