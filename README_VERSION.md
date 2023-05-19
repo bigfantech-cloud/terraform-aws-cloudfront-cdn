@@ -1,3 +1,19 @@
+# v1.0.2
+
+### improvement
+
+#### what changed:
+
+`create_alternate_domain_names_dns_record` variable for DNS record creation condition
+
+#### reason for change:
+
+Allows custom DNS management outside this module
+
+#### info:
+
+variable name: `create_alternate_domain_names_dns_record`
+
 # v1.0.1
 
 ### Feature
