@@ -1,5 +1,5 @@
 resource "aws_route53_record" "A" {
-  for_each = toset(var.alternate_domain_names)
+  for_each = var.create_alternate_domain_names_dns_record ? toset(var.alternate_domain_names) : []
 
   zone_id = var.hosted_zone_id
   name    = each.key
@@ -13,7 +13,7 @@ resource "aws_route53_record" "A" {
 }
 
 resource "aws_route53_record" "ipv6" {
-  for_each = var.ipv6_enabled ? toset(var.alternate_domain_names)
+  for_each = var.ipv6_enabled && var.create_alternate_domain_names_dns_record ? toset(var.alternate_domain_names) : []
 
   zone_id = var.hosted_zone_id
   name    = each.key
