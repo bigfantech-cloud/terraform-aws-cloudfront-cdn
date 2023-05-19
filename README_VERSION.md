@@ -4,7 +4,11 @@
 
 #### what changed:
 
+Addition:
 `create_alternate_domain_names_dns_record` variable for DNS record creation condition
+
+Fix:
+ipv6 Rout53 records creation condition statement fix
 
 #### reason for change:
 
