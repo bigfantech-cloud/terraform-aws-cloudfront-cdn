@@ -11,14 +11,20 @@ variable "description" {
 }
 
 variable "origin_domain_name" {
-  description = "The DNS domain name of either the Custom Origin, or S3 bucket."
+  description = "The DNS domain name of either the Custom Origin, or S3 bucket"
   type        = string
 }
 
 variable "alternate_domain_names" {
-  description = "List of alternate Domains. Route53 records will be created for each domain."
+  description = "List of alternate Domains. Route53 records will be created for each domain"
   type        = list(string)
   default     = []
+}
+
+variable "create_alternate_domain_names_dns_record" {
+  description = "Create DNS records in Route53 for alternate_domain_names. Default = true"
+  type        = bool
+  default     = true
 }
 
 variable "origin_http_port" {
